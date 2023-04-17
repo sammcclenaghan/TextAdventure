@@ -1,14 +1,11 @@
 package computer.game.commands;
 
 import computer.game.commands.ICommand.BaseCommand;
-import computer.game.gameobjects.Player;
 
 public class GoCommand extends BaseCommand {
   private String direction;
-  private Player player;
 
-  public GoCommand(Player player) {
-    this.player = player;
+  public GoCommand() {
   }
 
   /*

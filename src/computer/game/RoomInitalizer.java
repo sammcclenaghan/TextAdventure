@@ -3,7 +3,8 @@ package computer.game;
 import java.util.HashMap;
 import java.util.Map;
 
-import computer.game.commands.Room;
+import computer.game.gameobjects.Room;
+import computer.game.gameobjects.Weapon;
 
 public class RoomInitalizer {
   private Map<String, Room> rooms;
@@ -51,6 +52,8 @@ public class RoomInitalizer {
     room1.setNeighbor("south", room5);
     room1.setNeighbor("east", room4);
     room1.setNeighbor("west", room6);
+    room1.addItem(new Weapon("Sword", "A sword", 20));
+    room1.addItem(new Potion("Potion", "A new potion", 20));
 
     room2.setNeighbor("north", room3);
     room2.setNeighbor("south", room1);
