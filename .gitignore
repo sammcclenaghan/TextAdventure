@@ -1,0 +1,16 @@
+# Ignore compiled Java class files
+*.class
+
+# Optionally, ignore the bin directory (if used for compiled classes)
+bin/
+
+# Ignore other common Java artifacts
+# Eclipse
+.project
+.classpath
+*.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/

@@ -1,22 +1,24 @@
 package computer.game;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import computer.game.commands.ICommand;
-import computer.game.commands.LookCommand;
-import computer.game.commands.TakeCommand;
 import computer.game.commands.DropCommand;
 import computer.game.commands.EquipCommand;
 import computer.game.commands.Event;
 import computer.game.commands.GoCommand;
+import computer.game.commands.HelpCommand;
+import computer.game.commands.ICommand;
+import computer.game.commands.LookCommand;
+import computer.game.commands.TakeCommand;
 import computer.game.gameobjects.Item;
 import computer.game.gameobjects.Player;
 import computer.game.gameobjects.Room;
 import computer.game.gameobjects.UseCommand;
 import computer.game.gameobjects.Weapon;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Game {
+
     GameController controller;
 
     public Game() {
@@ -29,6 +31,7 @@ public class Game {
     }
 
     static class GameController {
+
         private Scanner scanner;
         private Player player;
         private Map<String, Room> rooms;
@@ -53,6 +56,7 @@ public class Game {
             EquipCommand equipCommand = new EquipCommand();
             UseCommand useCommand = new UseCommand();
             InventoryCommand inventoryCommand = new InventoryCommand();
+            HelpCommand helpCommand = new HelpCommand();
 
             goCommand.setEventListener(event -> handleGoEvent(event));
             lookCommand.setEventListener(event -> handleLookEvent(event));
@@ -60,7 +64,10 @@ public class Game {
             dropCommand.setEventListener(event -> handleDropEvent(event));
             equipCommand.setEventListener(event -> handleEquipEvent(event));
             useCommand.setEventListener(event -> handleUseEvent(event));
-            inventoryCommand.setEventListener(event -> handleInventoryEvent(event));
+            inventoryCommand.setEventListener(event ->
+                handleInventoryEvent(event)
+            );
+            helpCommand.setEventListener(event -> handleHelpEvent(event));
 
             commandMap.put("go", goCommand);
             commandMap.put("look", lookCommand);
@@ -69,6 +76,7 @@ public class Game {
             commandMap.put("equip", equipCommand);
             commandMap.put("use", useCommand);
             commandMap.put("inventory", inventoryCommand);
+            commandMap.put("help", helpCommand);
         }
 
         public void initializeRooms() {
@@ -134,7 +142,9 @@ public class Game {
                 } else {
                     player.addItem(roomItem);
                     currentRoom.removeItem(roomItem);
-                    System.out.println(roomItem.getName() + " was added to inventory");
+                    System.out.println(
+                        roomItem.getName() + " was added to inventory"
+                    );
                 }
             }
         }
@@ -148,7 +158,9 @@ public class Game {
                 } else {
                     currentRoom.addItem(playerItem);
                     player.removeItem(playerItem);
-                    System.out.println(playerItem.getName() + " was removed to inventory");
+                    System.out.println(
+                        playerItem.getName() + " was removed to inventory"
+                    );
                 }
             }
         }
@@ -180,6 +192,36 @@ public class Game {
         public void handleInventoryEvent(Event event) {
             if ("inventory".equalsIgnoreCase(event.getType())) {
                 player.getInventory().display(player);
+            }
+        }
+
+        public void handleHelpEvent(Event event) {
+            if ("help".equalsIgnoreCase(event.getType())) {
+                System.out.println("\n--- Help Menu ---");
+                System.out.println("Here are the commands you can use:");
+                System.out.println(
+                    " - go [direction]: Move to a neighboring room (e.g., 'go north')."
+                );
+                System.out.println(
+                    " - look [direction]: Look in a specific direction (e.g., 'look east')."
+                );
+                System.out.println(
+                    " - take [item]: Pick up an item (e.g., 'take sword')."
+                );
+                System.out.println(
+                    " - drop [item]: Drop an item from your inventory (e.g., 'drop potion')."
+                );
+                System.out.println(
+                    " - equip [weapon]: Equip a weapon from your inventory (e.g., 'equip sword')."
+                );
+                System.out.println(
+                    " - use [item]: Use an item from your inventory (e.g., 'use potion')."
+                );
+                System.out.println(
+                    " - inventory: Show your current inventory."
+                );
+                System.out.println(" - help: Display this help menu.");
+                System.out.println("-------------------\n");
             }
         }
     }
